@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 function StarterLoadingPage() {
   const [hideLoadingPage, setHideLoadingPage] = useState(false);
   useEffect(() => {
-    document.body.classList.add("hide");
     setTimeout(() => {
       setHideLoadingPage(true);
       document.body.classList.remove("hide");

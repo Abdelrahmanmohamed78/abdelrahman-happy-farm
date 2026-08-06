@@ -55,7 +55,7 @@ function AdminProductsPage() {
             : [image1, image2, image3],
           productAmount: 1,
           review: {
-            fiveStars: 2,
+            fiveStars: 0,
             fourStars: 0,
             threeStars: 0,
             twoStars: 0,
@@ -66,7 +66,7 @@ function AdminProductsPage() {
             "Lorem ipsum dolor sit amet, nulla probatus oportere pro ut, at iisque ocurreret qui, qui everti nusquam eu. Mundi appetere et sit, iracundia interesset consequuntur nec an. Sumo nibh repudiare at has, no pri eruditi percipit.",
           descriptionImage: image1,
           isHot: false,
-          isNew: true,
+          isNew: false,
         }),
       );
       setImage1("");
