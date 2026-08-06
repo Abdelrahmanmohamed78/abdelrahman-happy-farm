@@ -175,12 +175,12 @@ function ProductPreview() {
                 Share:{" "}
                 <ul className=" flex gap-0.75 items-center text-hover-color text-[22px]">
                   <li className="duration-[0.4s] hover:text-main-color">
-                    <Link href={""}>
+                    <Link href={"https://www.facebook.com"}>
                       <TiSocialFacebook />
                     </Link>
                   </li>
                   <li className="duration-[0.4s] hover:text-main-color">
-                    <Link href={""}>
+                    <Link href={"https://www.pinterest.com/"}>
                       <RiTwitterXFill />
                     </Link>
                   </li>
@@ -190,12 +190,12 @@ function ProductPreview() {
                     </Link>
                   </li>
                   <li className="duration-[0.4s] hover:text-main-color">
-                    <Link href={""}>
+                    <Link href={"https://www.linkedin.com/"}>
                       <TiSocialLinkedin />
                     </Link>
                   </li>
                   <li className="duration-[0.4s] hover:text-main-color">
-                    <Link href={""}>
+                    <Link href={"https://t.me/+201036680001"}>
                       <RiTelegramFill />
                     </Link>
                   </li>

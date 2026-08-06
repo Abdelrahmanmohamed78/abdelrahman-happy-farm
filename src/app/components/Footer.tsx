@@ -24,7 +24,7 @@ function FooterSection() {
             <ul className="social-links flex items-center gap-1.25">
               <li>
                 <Link
-                  href={""}
+                  href={"https://facebook.com"}
                   className="w-10 h-10 rounded-[50%] flex justify-center items-center text-xl bg-[#365493] duration-[0.4s] hover:opacity-[0.7]"
                 >
                   <FaFacebookF />
@@ -32,7 +32,7 @@ function FooterSection() {
               </li>
               <li>
                 <Link
-                  href={""}
+                  href={"https://x.com"}
                   className="w-10 h-10 rounded-[50%] flex justify-center items-center text-xl bg-main-color duration-[0.4s] hover:opacity-[0.7]"
                 >
                   <RiTwitterXFill />
@@ -40,7 +40,7 @@ function FooterSection() {
               </li>
               <li>
                 <Link
-                  href={""}
+                  href={"https://www.instgram.com"}
                   className="w-10 h-10 rounded-[50%] flex justify-center items-center text-xl bg-[#774430] duration-[0.4s] hover:opacity-[0.7]"
                 >
                   <IoLogoInstagram />
