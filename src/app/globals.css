@@ -1,26 +1,202 @@
 @import "tailwindcss";
 
+/* Start Global Rules */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --main-bg: #f5f1eb;
+  --main-color: #000000;
+  --second-color: #ffffff;
+  --border-color: #0000001b;
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --color-main-bg: var(--main-bg);
+  --color-second-bg: #5985c8;
+  --color-main-color: var(--main-color);
+  --color-second-color: var(--second-color);
+  --color-hover-color: #33333399;
+  --color-star-color: #eabe12;
+  --color-border-color: var(--border-color);
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background-color: var(--color-main-bg);
+  height: 100vh;
+}
+body.showOverlay, body.hide {
+  overflow: hidden;
+}
+/* End Global Rules */
+.loading-image {
+  animation: loadingImage 1s linear infinite alternate;
+}
+/* Start Handle Stickey Header  */
+.stickey-header {
+  margin-top: 0 !important;
+}
+/* End Handle Stickey Header  */
+.main-container {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.carousel .holder {
+  animation: headerSpin 40s linear infinite;
+}
+.carousel .holder:hover {
+  animation-play-state: paused;
+}
+.active {
+  @apply text-second-bg;
+}
+.landing-image {
+  background-image: url("/farm-top-background-min.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+}
+@media (max-width: 992px) {
+  .landing-image {
+    background-image: none;
   }
 }
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
 }
+.holder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.wishlistAddIcon.active {
+  @apply text-second-bg;
+}
+@media (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+.products-grid .images-holder img {
+  width: 100%;
+}
+.products-grid .images-holder:hover>img:nth-of-type(1) {
+  opacity: 0;
+}
+.products-grid .images-holder:hover>img:nth-of-type(2) {
+  transform: scale(1.08);
+  opacity: 1;
+}
+.product-preview::-webkit-scrollbar {
+  display: none;
+}
+.product-preview img {
+  width: 415px;
+  height: auto;
+}
+footer h2 {
+  padding: 0;
+}
+.description-aside-holder {
+  height: calc(100% - 73px);
+}
+.description-aside-holder::-webkit-scrollbar {
+  display: none;
+}
+.info-holder .box ul li {
+  position: relative;
+  padding-left: 20px;
+}
+.info-holder .box ul li::before {
+  content: ">";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-weight: 700;
+}
+.aboutAnimationText .group {
+  animation: aboutAnimationText linear 30s infinite;
+}
+/* Start Visit Sec In About Page */
+.visit-parent {
+  background-image: url("/farm-about-us-visit-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+/* End Visit Sec In About Page */
+/* Start Handle Loading Page */
+.cow-logo {
+  animation: cowLogoAnimation 0.4s linear infinite;
+}
+/* End Handle Loading Page */
+.details-box  .text-details-holder::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent var(--color-second-color) transparent;
+}
+.recent-blogs > li:not(:last-of-type) a {
+  border-bottom: 1px solid var(--border-color);
+}
+.users-holder::-webkit-scrollbar {
+  display: none;
+}
+.users-holder *::-webkit-scrollbar {
+  background-color: var(--main-bg);
+  height: 5px;
+}
+.users-holder *::-webkit-scrollbar-corner {
+  background-color: var(--main-bg);
+}
+.users-holder *::-webkit-scrollbar-thumb {
+  background-color: var(--color-second-bg);
+}
+.completedOrders-holder::-webkit-scrollbar {
+  background-color: var(--main-bg);
+  height: 5px;
+}
+.completedOrders-holder::-webkit-scrollbar-corner {
+  background-color: var(--main-bg);
+}
+.completedOrders-holder::-webkit-scrollbar-thumb {
+  background-color: var(--color-second-bg);
+}
+/* Start App Animations */
+@keyframes loadingImage {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+@keyframes headerSpin {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes aboutAnimationText {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes cowLogoAnimation {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+/* End App Animations */
