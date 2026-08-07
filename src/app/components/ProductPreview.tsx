@@ -27,7 +27,11 @@ function ProductPreview() {
   );
   const selectedUser = useSelector((state: RootState) => state.selectedUser);
   const dispatch = useDispatch();
-  const [amountVal, setAmountVal] = useState(1);
+  const [amountVal, setAmountVal] = useState(() => selectedUser ? selectedUser.cart.map(el => {
+    if(el.id === selectedProduct?.id) {
+      return el.productAmount
+    }
+  }) : 1);
 
   useEffect(() => {
     function callNow() {
@@ -99,8 +103,8 @@ function ProductPreview() {
                 <div className="amount flex">
                   <button
                     onClick={() => {
-                      if (amountVal > 1) {
-                        setAmountVal((amount) => amount - 1);
+                      if (+amountVal > 1) {
+                        setAmountVal((amount) => +amount - 1);
                       }
                     }}
                     className="border-hover-color border rounded-tl-[50px] rounded-bl-[50px] py-1 px-2 font-bold cursor-pointer"
@@ -115,11 +119,11 @@ function ProductPreview() {
                     }}
                     className="text-center py-1 w-7.5 border-y border-hover-color"
                     type="text"
-                    value={amountVal}
+                    value={+amountVal}
                   />
                   <button
                     onClick={() => {
-                      setAmountVal((amount) => amount + 1);
+                      setAmountVal((amount) => +amount + 1);
                     }}
                     className="border-hover-color border rounded-tr-[50px] rounded-br-[50px] py-1 px-2 font-bold cursor-pointer"
                   >
@@ -171,7 +175,7 @@ function ProductPreview() {
                   {selectedProduct.category}
                 </span>
               </p>
-              <p className="my-5 text-main-color flex items-center font-bold text-[17px]">
+              <div className="my-5 text-main-color flex items-center font-bold text-[17px]">
                 Share:{" "}
                 <ul className=" flex gap-0.75 items-center text-hover-color text-[22px]">
                   <li className="duration-[0.4s] hover:text-main-color">
@@ -200,7 +204,7 @@ function ProductPreview() {
                     </Link>
                   </li>
                 </ul>
-              </p>
+              </div>
             </div>
           </div>
         </div>

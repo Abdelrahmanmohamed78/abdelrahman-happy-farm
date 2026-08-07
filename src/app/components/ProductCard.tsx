@@ -27,6 +27,9 @@ function ProductCard({
   handlewishlistBtnShow: boolean;
 }) {
   const selectedUser = useSelector((state: RootState) => state.selectedUser);
+  const selectedProduct = useSelector(
+    (state: RootState) => state.selectedProduct,
+  );
   const dispatch = useDispatch();
   const { totalRating, avgRating } = useRatingHandler(product.review);
   return (
@@ -52,9 +55,19 @@ function ProductCard({
                   );
                   if (exist) {
                     dispatch(removeFromWishlist(product.id));
-                    dispatch(handleRemoveProductFromUserWishlist({id:selectedUser.id, productID: product.id}));
+                    dispatch(
+                      handleRemoveProductFromUserWishlist({
+                        id: selectedUser.id,
+                        productID: product.id,
+                      }),
+                    );
                   } else {
-                    dispatch(handleAddProductToUserWishlist({id: selectedUser.id, product: product}));
+                    dispatch(
+                      handleAddProductToUserWishlist({
+                        id: selectedUser.id,
+                        product: product,
+                      }),
+                    );
                   }
                 } else {
                   toast.error("You Should Login First!");
@@ -114,7 +127,7 @@ function ProductCard({
                   AddToCart({
                     id: selectedUser.id,
                     cartProduct: { ...product },
-                  })
+                  }),
                 );
               } else {
                 toast.error("You Should Login First!");
@@ -133,8 +146,27 @@ function ProductCard({
           <div className="search-holder relative group/searchMessage">
             <CiSearch
               onClick={() => {
+                console.log(selectedProduct);
                 dispatch(handleShowOverlay(true));
-                dispatch(handleSelectedProduct({ ...product }));
+                if (selectedUser) {
+                  const exist = selectedUser.cart.some(
+                    (el) => el.id === product.id,
+                  );
+                  if (exist) {
+                    selectedUser.cart.map((el) => {
+                      if (el.id === product.id) {
+                        dispatch(
+                          handleSelectedProduct({
+                            ...product,
+                            productAmount: el.productAmount,
+                          }),
+                        );
+                      }
+                    });
+                  } else {
+                    dispatch(handleSelectedProduct({ ...product }));
+                  }
+                }
               }}
               className="text-2xl cursor-pointer duration-[0.4s] hover:text-hover-color"
             />

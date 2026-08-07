@@ -56,6 +56,29 @@ function ProductPage() {
     }
     callNow();
   }, [productDetails]);
+
+    useEffect(() => {
+    function callNow() {
+      if (productID) {
+        products.map((product) => {
+          if (product.id == +productID) {
+            selectedUser?.cart.map((el) => {
+              if (el.id === product.id) {
+                dispatch(
+                  handleProductAmount({
+                    id: product.id,
+                    amount: el.productAmount,
+                  }),
+                );
+                dispatch(handleSelectedProduct(null));
+              }
+            });
+          }
+        });
+      }
+    }
+    callNow();
+  }, []);
   return (
     <>
       {productDetails && (

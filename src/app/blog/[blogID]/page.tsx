@@ -99,8 +99,8 @@ function BlogDrtailsPage() {
                                 {post.header}
                               </h3>
                             )}
-                            <p className="leading-normal text-hover-color">
-                              {post.text}
+                            <p className="leading-normal text-hover-color" dangerouslySetInnerHTML={{ __html: post.text}}>
+                              
                             </p>
                           </div>
                           <Image

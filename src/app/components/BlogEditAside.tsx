@@ -20,20 +20,16 @@ function BlogEditAside() {
   const selectedBlogToEdit = useSelector(
     (state: RootState) => state.selectedBlogToEdit,
   );
+  const monthNumber =
+    new Date(
+      `${selectedBlogToEdit?.date.month} ${selectedBlogToEdit?.date.day}, ${selectedBlogToEdit?.date.year}`,
+    ).getMonth() + 1;
 
   const dispatch = useDispatch();
   const schema = z.object({
     title: z.string().min(3, "Invalid Blog Title"),
     category: z.string(),
-    blogDay: z.coerce
-      .number()
-      .min(1, "Invalid Selected Day")
-      .max(31, "Invalid Selected Day"),
-    blogMonth: z.string(),
-    blogYear: z.coerce
-      .number()
-      .min(2000, "Invalid Selected Day")
-      .max(new Date().getFullYear(), "Invalid Selected Day"),
+    blogDatePicker: z.string(),
   });
   const {
     register,
@@ -45,17 +41,12 @@ function BlogEditAside() {
     defaultValues: {
       title: selectedBlogToEdit?.title,
       category: selectedBlogToEdit?.category,
-      blogDay: selectedBlogToEdit?.date.day,
-      blogMonth: selectedBlogToEdit?.date.month,
-      blogYear: selectedBlogToEdit?.date.year,
     },
   });
   function submitData(data: {
     title: string;
     category: string;
-    blogDay: number;
-    blogMonth: string;
-    blogYear: number;
+    blogDatePicker: string;
   }) {
     if (selectedBlogToEdit) {
       dispatch(
@@ -64,9 +55,14 @@ function BlogEditAside() {
           title: data.title,
           category: data.category,
           date: {
-            day: data.blogDay,
-            month: data.blogMonth,
-            year: data.blogYear,
+            day: data.blogDatePicker.split("-")[2],
+            month: new Date(
+              new Date().getFullYear(),
+              +data.blogDatePicker.split("-")[1] - 1,
+            ).toLocaleString("en-US", {
+              month: "long",
+            }),
+            year: data.blogDatePicker.split("-")[0],
           },
         }),
       );
@@ -80,12 +76,10 @@ function BlogEditAside() {
       reset({
         title: selectedBlogToEdit.title,
         category: selectedBlogToEdit.category,
-        blogDay: selectedBlogToEdit.date.day,
-        blogMonth: selectedBlogToEdit.date.month,
-        blogYear: selectedBlogToEdit.date.year,
+        blogDatePicker: `${selectedBlogToEdit.date.year}-${monthNumber > 9 ? monthNumber : `0${+monthNumber}`}-${+selectedBlogToEdit.date.day > 9 ? +selectedBlogToEdit.date.day : `0${+selectedBlogToEdit.date.day}`}`,
       });
     }
-  }, [selectedBlogToEdit, reset]);
+  }, [selectedBlogToEdit, reset, monthNumber]);
   return (
     <aside
       className={`delivery-aside fixed top-0 right-0 z-5 bg-second-color w-full md:w-150 h-full duration-[0.4s] ${showBlogEditAside ? "translate-x-0" : "translate-x-full"}`}
@@ -139,60 +133,19 @@ function BlogEditAside() {
             <option value="Agroecology">Agroecology</option>
           </select>
         </div>
-        <div className="blog-day-holder flex flex-col gap-1.25">
-          <label className="flex gap-1.25" htmlFor="blogDay">
-            Blog Day <span className="font-bold text-red-500">*</span>
+        <div className="blog-datePicker-holder flex flex-col gap-1.25">
+          <label className="flex gap-1.25" htmlFor="blogDatePicker">
+            Blog Date <span className="font-bold text-red-500">*</span>
           </label>
           <input
             className="px-4 py-3 rounded-[50px] bg-second-color border border-border-color outline-0"
-            type="text"
-            id="blogDay"
-            min={1}
-            max={31}
-            {...register("blogDay")}
+            type="date"
+            id="blogDatePicker"
+            {...register("blogDatePicker")}
           />
-          {errors.blogDay && (
+          {errors.blogDatePicker && (
             <span className="text-sm italic font-semibold text-red-500">
-              {errors.blogDay.message}
-            </span>
-          )}
-        </div>
-        <div className="blog-month-holder flex flex-col gap-1.25">
-          <label className="flex gap-1.25" htmlFor="blogMonth">
-            Blog Month <span className="font-bold text-red-500">*</span>
-          </label>
-          <select
-            className="py-3 px-5 rounded-[50px] border border-border-color bg-second-color outline-0"
-            id="blogMonth"
-            {...register("blogMonth")}
-          >
-            <option value="january">January</option>
-            <option value="february">February</option>
-            <option value="march">March</option>
-            <option value="april">April</option>
-            <option value="may">May</option>
-            <option value="june">June</option>
-            <option value="july">July</option>
-            <option value="august">August</option>
-            <option value="september">September</option>
-            <option value="october">October</option>
-            <option value="novermber">Novermber</option>
-            <option value="decamber">Decamber</option>
-          </select>
-        </div>
-        <div className="blog-year-holder flex flex-col gap-1.25">
-          <label className="flex gap-1.25" htmlFor="blogYear">
-            Blog Year <span className="font-bold text-red-500">*</span>
-          </label>
-          <input
-            className="px-4 py-3 rounded-[50px] bg-second-color border border-border-color outline-0"
-            type="text"
-            id="blogYear"
-            {...register("blogYear")}
-          />
-          {errors.blogYear && (
-            <span className="text-sm italic font-semibold text-red-500">
-              {errors.blogYear.message}
+              {errors.blogDatePicker.message}
             </span>
           )}
         </div>

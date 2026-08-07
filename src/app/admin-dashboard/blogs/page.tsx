@@ -9,7 +9,13 @@ import AdminAside from "../AdminAside";
 import HolderHeader from "../HolderHeader";
 import Image from "next/image";
 import { FaRegTrashCan } from "react-icons/fa6";
-import { addBlogs, handleBlogEditAside, handleSelectedBlogToEdit, handleShowOverlay, removeBlogs } from "@/app/RTK/farmSlice";
+import {
+  addBlogs,
+  handleBlogEditAside,
+  handleSelectedBlogToEdit,
+  handleShowOverlay,
+  removeBlogs,
+} from "@/app/RTK/farmSlice";
 import { CiEdit } from "react-icons/ci";
 import z from "zod";
 import { useForm } from "react-hook-form";
@@ -26,15 +32,7 @@ function AdminBlogsPage() {
   const schema = z.object({
     title: z.string().min(3, "Invalid Blog Title"),
     category: z.string(),
-    blogDay: z.coerce
-      .number()
-      .min(1, "Invalid Selected Day")
-      .max(31, "Invalid Selected Day"),
-    blogMonth: z.string(),
-    blogYear: z.coerce
-      .number()
-      .min(2000, "Invalid Selected Day")
-      .max(new Date().getFullYear(), "Invalid Selected Day"),
+      blogDatePicker: z.string(),
   });
 
   const {
@@ -47,9 +45,7 @@ function AdminBlogsPage() {
   function submitData(data: {
     title: string;
     category: string;
-    blogDay: number;
-    blogMonth: string;
-    blogYear: number;
+    blogDatePicker: string,
   }) {
     if (bannerImage === "") {
       toast.error("You Should Upload Banner Image!");
@@ -60,9 +56,11 @@ function AdminBlogsPage() {
           title: data.title,
           category: data.category,
           date: {
-            day: data.blogDay,
-            month: data.blogMonth,
-            year: data.blogYear,
+            day: data.blogDatePicker.split("-")[2],
+            month: new Date(+data.blogDatePicker.split("-")[2], +data.blogDatePicker.split("-")[1] - 1).toLocaleString("en-US", {
+              month: "long",
+            }),
+            year: data.blogDatePicker.split("-")[0],
           },
           author: {
             image: "/farm-marvin-mckinney-80x80.png",
@@ -229,60 +227,20 @@ function AdminBlogsPage() {
                 <option value="Agroecology">Agroecology</option>
               </select>
             </div>
-            <div className="blogDay-holder flex flex-col lg:col-span-2 gap-0.5">
-              <label htmlFor="blogDay" className="flex gap-0.5">
+            <div className="blogDatePicker-holder flex flex-col lg:col-span-2 gap-0.5">
+              <label htmlFor="blogDatePicker" className="flex gap-0.5">
                 Blog Day <span className="font-bold text-red-500">*</span>
               </label>
               <input
                 className="py-3 px-5 rounded-[50px] border border-border-color bg-second-color outline-0"
-                type="number"
-                id="blogDay"
-                {...register("blogDay")}
+                type="date"
+                id="blogDatePicker"
+                {...register("blogDatePicker")}
+                defaultValue={`${new Date().getFullYear()}-${+new Date().getMonth() + 1 > 9 ? new Date().getMonth() + 1 : `0${new Date().getMonth() + 1}`}-${new Date().getDate() > 9 ? new Date().getDate() : `0${new Date().getDate()}`}`}
               />
-              {errors.blogDay && (
+              {errors.blogDatePicker && (
                 <span className="text-sm font-semibold italic text-red-500">
-                  {errors.blogDay.message}
-                </span>
-              )}
-            </div>
-            <div className="blogMonth-holder flex flex-col lg:col-span-2 gap-0.5">
-              <label htmlFor="blogMonth" className="flex gap-0.5">
-                Blog Month <span className="font-bold text-red-500">*</span>
-              </label>
-              <select
-                {...register("blogMonth")}
-                className="py-3 px-5 rounded-[50px] border border-border-color bg-second-color outline-0"
-                id="blogMonth"
-              >
-                <option value="january">January</option>
-                <option value="february">February</option>
-                <option value="march">March</option>
-                <option value="april">April</option>
-                <option value="may">May</option>
-                <option value="june">June</option>
-                <option value="july">July</option>
-                <option value="august">August</option>
-                <option value="september">September</option>
-                <option value="october">October</option>
-                <option value="novermber">Novermber</option>
-                <option value="decamber">Decamber</option>
-              </select>
-            </div>
-            <div className="blogYear-holder flex flex-col lg:col-span-2 gap-0.5">
-              <label htmlFor="blogYear" className="flex gap-0.5">
-                Blog Year <span className="font-bold text-red-500">*</span>
-              </label>
-              <input
-                className="py-3 px-5 rounded-[50px] border border-border-color bg-second-color outline-0"
-                type="number"
-                id="blogYear"
-                min={2000}
-                max={new Date().getFullYear()}
-                {...register("blogYear")}
-              />
-              {errors.blogYear && (
-                <span className="text-sm font-semibold italic text-red-500">
-                  {errors.blogYear.message}
+                  {errors.blogDatePicker.message}
                 </span>
               )}
             </div>

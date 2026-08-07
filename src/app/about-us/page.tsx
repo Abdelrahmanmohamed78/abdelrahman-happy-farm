@@ -201,7 +201,7 @@ function AboutPage() {
               Excursions are held daily from 11:00 a.m. to 5:00 p.m.
             </p>
             <Link href={"/shop"} className="text-sm font-bold text-second-color bg-second-bg py-3 px-6 rounded-[50px] w-fit block mx-auto cursor-pointer duration-[0.4s] hover:opacity-[0.9]">
-              Shpo Now
+              Shop Now
             </Link>
           </div>
         </div>

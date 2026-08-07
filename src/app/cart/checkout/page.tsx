@@ -44,8 +44,12 @@ function CheckoutPage() {
       .string()
       .min(3, "Country / Region must be more than 3 characters!"),
     town: z.string().min(3, "Town / City must be more than 3 characters!"),
-    street: z.coerce.number().min(1, "Invalid street number"),
-    postcode: z.coerce.number().min(1, "Invalid postcode"),
+    street: z.coerce
+      .number({ error: "street must be a number" })
+      .min(1, "Invalid street number"),
+    postcode: z.coerce
+      .number({ error: "postcode must be a number" })
+      .min(1, "Invalid postcode"),
   });
   const {
     register,
@@ -53,14 +57,14 @@ function CheckoutPage() {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
   function submitData(data: {
-    firstName: string,
-    lastName: string,
-    phone: string,
-    email: string,
-    country: string,
-    town: string,
-    street: number,
-    postcode: number,
+    firstName: string;
+    lastName: string;
+    phone: string;
+    email: string;
+    country: string;
+    town: string;
+    street: number;
+    postcode: number;
   }) {
     dispatch(
       handleAddCompleteProductToUser({

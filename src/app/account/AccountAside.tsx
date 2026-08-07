@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { handleSelectedUser } from "../RTK/farmSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { handleProductAmount, handleSelectedProduct, handleSelectedUser } from "../RTK/farmSlice";
+import { RootState } from "../RTK/store";
 
 function AccountAside() {
   const pathName = usePathname();
   const dispatch = useDispatch();
+  const products = useSelector((state:RootState) => state.products);
 
   return (
     <aside className="min-w-75 max-w-full lg:border-r lg:border-r-border-color lg:pr-5">
@@ -51,6 +53,10 @@ function AccountAside() {
           <Link
             onClick={() => {
               dispatch(handleSelectedUser(null));
+              products.map(product => {
+                dispatch(handleProductAmount({id:product.id, amount: 1}));
+              });
+              dispatch(handleSelectedProduct(null));
             }}
             className={`block font-semibold text-lg py-2.5 px-3.75 rounded-[10px] duration-[0.4s] hover:bg-border-color`}
             href={"/"}

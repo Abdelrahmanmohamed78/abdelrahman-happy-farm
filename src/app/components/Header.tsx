@@ -117,12 +117,18 @@ function Header() {
           <GoHeart />
         </div>
         <div
+          className="relative"
           onClick={() =>
             selectedUser
               ? redirect("/cart")
               : toast.error("You Should Login First")
           }
         >
+          {selectedUser && selectedUser.cart.length > 0 && (
+            <span className="absolute -top-3 -right-3 rounded-[50%] w-4 h-4 flex justify-center items-center bg-second-bg text-second-color text-[12px] font-semibold">
+              {selectedUser?.cart.length}
+            </span>
+          )}
           <RiShoppingCartLine className="text-xl cursor-pointer duration-[0.4s] hover:text-hover-color" />
         </div>
       </div>
