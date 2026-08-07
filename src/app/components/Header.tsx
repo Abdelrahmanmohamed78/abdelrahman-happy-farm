@@ -77,6 +77,7 @@ function Header() {
           width={50}
           height={50}
           alt="logo image"
+          priority
         ></Image>
       </Link>
       <div className="other-links flex items-center gap-10">

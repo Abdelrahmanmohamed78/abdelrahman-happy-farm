@@ -326,6 +326,7 @@ const initialState: InitialState = {
       ],
     },
   ],
+  users: [],
   selectedProduct: null,
   showOverlay: false,
   selectedProductToEdit: null,
@@ -335,7 +336,6 @@ const initialState: InitialState = {
   showLinksAside: false,
   showDescriptionAside: false,
   showDeliveryAside: false,
-  users: [],
   selectedUser: null,
 };
 
@@ -440,6 +440,7 @@ export const farmSlice = createSlice({
       state.users = state.users.filter((user) => {
         return user.id !== action.payload;
       });
+      toast.success("User Removed Successfully");
     },
     handleClearCart: (state, action) => {
       state.users = state.users.map((user) => {
@@ -448,6 +449,7 @@ export const farmSlice = createSlice({
         }
         return user;
       });
+      toast.success("User Cart Cleared Successfully");
     },
     handleClearWishlist: (state, action) => {
       state.users = state.users.map((user) => {
@@ -456,6 +458,7 @@ export const farmSlice = createSlice({
         }
         return user;
       });
+      toast.success("User Wishlist Cleared Successfully");
     },
     handleAddProductToUserWishlist: (state, action) => {
       state.users = state.users.map((user) => {
