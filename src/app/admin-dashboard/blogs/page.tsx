@@ -32,7 +32,7 @@ function AdminBlogsPage() {
   const schema = z.object({
     title: z.string().min(3, "Invalid Blog Title"),
     category: z.string(),
-      blogDatePicker: z.string(),
+    blogDatePicker: z.string(),
   });
 
   const {
@@ -45,7 +45,7 @@ function AdminBlogsPage() {
   function submitData(data: {
     title: string;
     category: string;
-    blogDatePicker: string,
+    blogDatePicker: string;
   }) {
     if (bannerImage === "") {
       toast.error("You Should Upload Banner Image!");
@@ -57,13 +57,16 @@ function AdminBlogsPage() {
           category: data.category,
           date: {
             day: data.blogDatePicker.split("-")[2],
-            month: new Date(+data.blogDatePicker.split("-")[2], +data.blogDatePicker.split("-")[1] - 1).toLocaleString("en-US", {
+            month: new Date(
+              +data.blogDatePicker.split("-")[2],
+              +data.blogDatePicker.split("-")[1] - 1,
+            ).toLocaleString("en-US", {
               month: "long",
             }),
             year: data.blogDatePicker.split("-")[0],
           },
           author: {
-            image: "/farm-marvin-mckinney-80x80.png",
+            image: "/public/farm-marvin-mckinney.png",
             username: "Mr. Mackay",
           },
           bannerImage: bannerImage,
