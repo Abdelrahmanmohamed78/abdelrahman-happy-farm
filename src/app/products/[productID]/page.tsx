@@ -57,7 +57,7 @@ function ProductPage() {
     callNow();
   }, [productDetails]);
 
-    useEffect(() => {
+  useEffect(() => {
     function callNow() {
       if (productID) {
         products.map((product) => {

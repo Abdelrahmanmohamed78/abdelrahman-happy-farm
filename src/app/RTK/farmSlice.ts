@@ -326,14 +326,16 @@ const initialState: InitialState = {
       ],
     },
   ],
-  users: [{
-    id: 1,
-    username: "Admin",
-    email: "admin@gmail.com",
-    password: "12345678",
-    cart: [],
-    wishlist: [],
-  }],
+  users: [
+    {
+      id: 1,
+      username: "Admin",
+      email: "admin@gmail.com",
+      password: "12345678",
+      cart: [],
+      wishlist: [],
+    },
+  ],
   selectedProduct: null,
   showOverlay: false,
   selectedProductToEdit: null,
@@ -358,6 +360,28 @@ export const farmSlice = createSlice({
         return product.id !== action.payload;
       });
       toast.success("Product Removed Successfully");
+    },
+    handleProductReview: (state, action) => {
+      state.products = state.products.map((product) => {
+        if (product.id === action.payload.id) {
+          if (action.payload.rate === 5) {
+            product.review.fiveStars = product.review.fiveStars + 1;
+          }
+          if (action.payload.rate === 4) {
+            product.review.fourStars = product.review.fourStars + 1;
+          }
+          if (action.payload.rate === 3) {
+            product.review.threeStars = product.review.threeStars + 1;
+          }
+          if (action.payload.rate === 2) {
+            product.review.twoStars = product.review.twoStars + 1;
+          }
+          if (action.payload.rate === 1) {
+            product.review.oneStars = product.review.oneStars + 1;
+          }
+        }
+        return product
+      });
     },
     handleEditAside: (state, action) => {
       state.showProductEditAside = action.payload;
@@ -426,10 +450,10 @@ export const farmSlice = createSlice({
       });
     },
     handleResetProductsAmount: (state) => {
-      state.products = state.products.map(product => {
+      state.products = state.products.map((product) => {
         product.productAmount = 1;
         return product;
-      })
+      });
     },
     handleShowLinksAside: (state, action) => {
       state.showLinksAside = action.payload;
@@ -470,7 +494,6 @@ export const farmSlice = createSlice({
     handleAddProductToUserWishlist: (state, action) => {
       state.users = state.users.map((user) => {
         if (user.id === action.payload.id) {
-          console.log("TRUE");
           user.wishlist.push(action.payload.product);
           state.selectedUser = user;
         }
@@ -572,6 +595,7 @@ export const farmSlice = createSlice({
 export const {
   addProduct,
   removeProduct,
+  handleProductReview,
   handleEditAside,
   handleEditedProduct,
   handleSelectedProductToEdit,

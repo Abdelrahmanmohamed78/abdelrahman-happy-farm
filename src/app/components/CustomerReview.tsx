@@ -3,15 +3,53 @@
 import { FaRegStar, FaStar } from "react-icons/fa";
 import useRatingHandler from "./useRatingHandler";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../RTK/store";
 import ProductCard from "./ProductCard";
 import { ProductProps } from "../types/types";
+import z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
+import { handleProductReview } from "../RTK/farmSlice";
 
-function CustomerReviewSection({ productDetails }: {productDetails: ProductProps}) {
+function CustomerReviewSection({
+  productDetails,
+}: {
+  productDetails: ProductProps;
+}) {
   const products = useSelector((state: RootState) => state.products);
+  const selectedUser = useSelector((state: RootState) => state.selectedUser);
   const { totalRating, avgRating } = useRatingHandler(productDetails.review);
   const [userRating, setUserRating] = useState(0);
+  const dispatch = useDispatch();
+  const schema = z.object({
+    reviewText: z
+      .string("Invalid Review Message!")
+      .min(3, "Review Message Length Should be more than 3 characters"),
+  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema) });
+  function submitData(data: { reviewText: string }) {
+    if (selectedUser) {
+      if (userRating) {
+        dispatch(
+          handleProductReview({ id: productDetails.id, rate: userRating }),
+        );
+        reset();
+        setUserRating(0);
+        toast.success("Review Added Successfully");
+      } else {
+        toast.error("Please, Pick a review Rating");
+      }
+    } else {
+      toast.error("You Should Login First!");
+    }
+  }
 
   return (
     <section className="customer-review main-container py-20 bg-second-color">
@@ -19,7 +57,9 @@ function CustomerReviewSection({ productDetails }: {productDetails: ProductProps
       <div className="flex flex-col lg:flex-row gap-7.5 justify-start">
         <div className="rating-box grow">
           <div className="rating-num text-center">
-            <h3 className="text-6xl font-bold">{totalRating > 0 ? Math.round(avgRating) : 0}</h3>
+            <h3 className="text-6xl font-bold">
+              {totalRating > 0 ? Math.round(avgRating) : 0}
+            </h3>
             <ul className="flex gap-1 my-2.5 justify-center">
               {new Array(5).fill("1").map((el, i) => {
                 if (Math.round(avgRating) >= i + 1) {
@@ -214,18 +254,23 @@ function CustomerReviewSection({ productDetails }: {productDetails: ProductProps
               })}
             </ul>
           </div>
-          <form method="POST" onSubmit={(e) => e.preventDefault()}>
+          <form method="POST" onSubmit={handleSubmit(submitData)}>
             <label
-              htmlFor="reviewMessage"
+              htmlFor="reviewText"
               className="text-[17px] flex gap-1 mb-2.5"
             >
               Your review <span className="font-bold text-red-500">*</span>
             </label>
             <textarea
               className="resize-y w-full min-h-50 border rounded-3xl border-border-color p-5 outline-0"
-              name="reviewMessage"
-              id="reviewMessage"
+              id="reviewText"
+              {...register("reviewText")}
             ></textarea>
+            {errors.reviewText && (
+              <span className="text-sm text-red-500 block w-fit font-semibold italic mt-2.5">
+                {errors.reviewText.message}
+              </span>
+            )}
             <button
               className="rounded-[50px] py-3 px-6 mt-2.5 text-sm font-bold text-second-color bg-second-bg cursor-pointer duration-[0.4s] hover:opacity-[0.9]"
               type="submit"
@@ -236,13 +281,20 @@ function CustomerReviewSection({ productDetails }: {productDetails: ProductProps
         </div>
       </div>
       <ul className="recommended-products products-grid grid">
-        {
-          products.map(product => {
-            if((productDetails.category === product.category) && product.id !== productDetails.id) {
-              return <ProductCard key={product.id} product={product} handlewishlistBtnShow={true}></ProductCard>
-            }
-          })
-        }
+        {products.map((product) => {
+          if (
+            productDetails.category === product.category &&
+            product.id !== productDetails.id
+          ) {
+            return (
+              <ProductCard
+                key={product.id}
+                product={product}
+                handlewishlistBtnShow={true}
+              ></ProductCard>
+            );
+          }
+        })}
       </ul>
     </section>
   );
