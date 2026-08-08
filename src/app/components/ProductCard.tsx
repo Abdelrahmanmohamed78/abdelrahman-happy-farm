@@ -165,6 +165,8 @@ function ProductCard({
                   } else {
                     dispatch(handleSelectedProduct({ ...product }));
                   }
+                } else {
+                  toast.error("You Should Login First!");
                 }
               }}
               className="text-2xl cursor-pointer duration-[0.4s] hover:text-hover-color"
