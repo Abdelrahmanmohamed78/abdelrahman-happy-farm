@@ -146,9 +146,8 @@ function ProductCard({
           <div className="search-holder relative group/searchMessage">
             <CiSearch
               onClick={() => {
-                console.log(selectedProduct);
-                dispatch(handleShowOverlay(true));
                 if (selectedUser) {
+                  dispatch(handleShowOverlay(true));
                   const exist = selectedUser.cart.some(
                     (el) => el.id === product.id,
                   );
