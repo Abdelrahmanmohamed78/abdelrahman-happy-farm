@@ -8,6 +8,7 @@ import {
   handleDeliveryAside,
   handleDescriptionAside,
   handleProductAmount,
+  handleProductAmountInCart,
   handleRemoveProductFromUserWishlist,
   handleSelectedProduct,
   handleShowOverlay,
@@ -209,6 +210,13 @@ function ProductPage() {
                             ...productDetails,
                             productAmount: amountVal,
                           },
+                        }),
+                      );
+                      dispatch(
+                        handleProductAmountInCart({
+                          id: selectedUser.id,
+                          productId: productDetails.id,
+                          productAmount: amountVal,
                         }),
                       );
                       dispatch(handleSelectedProduct(null));

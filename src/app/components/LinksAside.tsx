@@ -75,7 +75,7 @@ function LinksAside() {
                       dispatch(handleShowOverlay(false));
                       setSearchVal("");
                     }}
-                    href={`products/${product.id}`}
+                    href={`/products/${product.id}`}
                   >
                     {product.productName}
                   </Link>

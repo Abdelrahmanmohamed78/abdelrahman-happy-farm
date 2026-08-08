@@ -559,7 +559,7 @@ export const farmSlice = createSlice({
             state.selectedUser = user;
             toast.success("Product Added To Cart Successfully");
           } else {
-            toast.error("Product already Exist In Cart");
+            toast.error("Product Edited Successfully");
           }
         }
       });
