@@ -132,8 +132,30 @@ function WishlistPage() {
                         <div className="search-holder relative group/searchMessage">
                           <CiSearch
                             onClick={() => {
-                              dispatch(handleShowOverlay(true));
-                              dispatch(handleSelectedProduct({ ...product }));
+                              if (selectedUser) {
+                                dispatch(handleShowOverlay(true));
+                                const exist = selectedUser.cart.some(
+                                  (el) => el.id === product.id,
+                                );
+                                if (exist) {
+                                  selectedUser.cart.map((el) => {
+                                    if (el.id === product.id) {
+                                      dispatch(
+                                        handleSelectedProduct({
+                                          ...product,
+                                          productAmount: el.productAmount,
+                                        }),
+                                      );
+                                    }
+                                  });
+                                } else {
+                                  dispatch(
+                                    handleSelectedProduct({ ...product }),
+                                  );
+                                }
+                              } else {
+                                toast.error("You Should Login First!");
+                              }
                             }}
                             className="text-2xl cursor-pointer duration-[0.4s] hover:text-hover-color"
                           />
@@ -143,7 +165,17 @@ function WishlistPage() {
                           </span>
                         </div>
                       </div>
-                      <button onClick={() => dispatch(handleRemoveProductFromUserWishlist({id: selectedUser.id, productID: product.id}))} className="flex mt-5 w-full justify-center items-center text-lg text-second-color font-semibold bg-red-500 border-2 border-red-500 py-2 px-4 rounded-lg cursor-pointer duration-[0.4s] hover:bg-transparent hover:text-red-500">
+                      <button
+                        onClick={() =>
+                          dispatch(
+                            handleRemoveProductFromUserWishlist({
+                              id: selectedUser.id,
+                              productID: product.id,
+                            }),
+                          )
+                        }
+                        className="flex mt-5 w-full justify-center items-center text-lg text-second-color font-semibold bg-red-500 border-2 border-red-500 py-2 px-4 rounded-lg cursor-pointer duration-[0.4s] hover:bg-transparent hover:text-red-500"
+                      >
                         <FaRegTrashCan />
                       </button>
                     </div>
