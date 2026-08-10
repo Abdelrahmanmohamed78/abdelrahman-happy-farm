@@ -123,12 +123,24 @@ function ProductCard({
           <Link
             onClick={() => {
               if (selectedUser) {
-                dispatch(
-                  AddToCart({
-                    id: selectedUser.id,
-                    cartProduct: { ...product },
-                  }),
+                const exist = selectedUser.cart.some(
+                  (el) => el.id === product.id,
                 );
+                if (exist) {
+                  dispatch(
+                    AddToCart({
+                      id: selectedUser.id,
+                      cartProduct: { ...product },
+                    }),
+                  );
+                } else {
+                  dispatch(
+                    AddToCart({
+                      id: selectedUser.id,
+                      cartProduct: { ...product, productAmount: 1 },
+                    }),
+                  );
+                }
               } else {
                 toast.error("You Should Login First!");
               }
@@ -163,7 +175,9 @@ function ProductCard({
                       }
                     });
                   } else {
-                    dispatch(handleSelectedProduct({ ...product, productAmount: 1 }));
+                    dispatch(
+                      handleSelectedProduct({ ...product, productAmount: 1 }),
+                    );
                   }
                 } else {
                   toast.error("You Should Login First!");
