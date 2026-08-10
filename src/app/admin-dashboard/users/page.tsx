@@ -60,10 +60,7 @@ function AdminUsersPage() {
                     <p>There Is No Users...</p>
                   ) : (
                     users.map((user, i) => {
-                      if (
-                        user.email !== "admin@gmail.com" &&
-                        user.password !== "12345678"
-                      ) {
+                      if (user.email !== "admin@gmail.com") {
                         return (
                           <tr
                             key={user.id}
@@ -87,8 +84,7 @@ function AdminUsersPage() {
                             <td className="p-2.5 border border-border-color text-center flex flex-col gap-2.5">
                               <button
                                 onClick={() =>
-                                  user.email !== "admin@gmail.com" &&
-                                  user.password !== "12345678"
+                                  user.email !== "admin@gmail.com"
                                     ? dispatch(handleRemoveUser(user.id))
                                     : toast.error("You Can`t Remove Admin")
                                 }
@@ -98,8 +94,7 @@ function AdminUsersPage() {
                               </button>
                               <button
                                 onClick={() =>
-                                  user.email !== "admin@gmail.com" &&
-                                  user.password !== "12345678"
+                                  user.email !== "admin@gmail.com"
                                     ? dispatch(handleClearCart(user.id))
                                     : toast.error("You Can`t Remove Admin")
                                 }
@@ -109,8 +104,7 @@ function AdminUsersPage() {
                               </button>
                               <button
                                 onClick={() =>
-                                  user.email !== "admin@gmail.com" &&
-                                  user.password !== "12345678"
+                                  user.email !== "admin@gmail.com"
                                     ? dispatch(handleClearWishlist(user.id))
                                     : toast.error("You Can`t Remove Admin")
                                 }

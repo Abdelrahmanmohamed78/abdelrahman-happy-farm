@@ -35,28 +35,26 @@ function LoginPage() {
       toast.error(`Email Not Found Please Register First`);
       redirect("/register");
     }
-    users.map(() => {
-      const existOne = users.some((user) => {
-        return user?.email === data.email || user?.password === data.password;
-      });
-      if (existOne) {
-        const existTwo = users.some((user) => {
-          if (user?.email === data.email && user?.password === data.password) {
-            dispatch(handleSelectedUser(user));
-          }
-          return user?.email === data.email && user?.password === data.password;
-        });
-        if (existTwo) {
-          toast.success("Login Successfully");
-          redirect("/");
-        } else {
-          toast.error("Incorrect Email or Password!");
-        }
-      } else {
-        toast.error(`Email Not Found Please Register First`);
-        redirect("/register");
-      }
+    const existOne = users.some((user) => {
+      return user?.email === data.email || user?.password === data.password;
     });
+    if (existOne) {
+      const existTwo = users.some((user) => {
+        if (user?.email === data.email && user?.password === data.password) {
+          dispatch(handleSelectedUser(user));
+        }
+        return user?.email === data.email && user?.password === data.password;
+      });
+      if (existTwo) {
+        toast.success("Login Successfully");
+        redirect("/");
+      } else {
+        toast.error("Incorrect Email or Password!");
+      }
+    } else {
+      toast.error(`Email Not Found Please Register First`);
+      redirect("/register");
+    }
   }
 
   return (

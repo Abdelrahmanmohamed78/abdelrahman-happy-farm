@@ -27,9 +27,6 @@ function ProductCard({
   handlewishlistBtnShow: boolean;
 }) {
   const selectedUser = useSelector((state: RootState) => state.selectedUser);
-  const selectedProduct = useSelector(
-    (state: RootState) => state.selectedProduct,
-  );
   const dispatch = useDispatch();
   const { totalRating, avgRating } = useRatingHandler(product.review);
   return (
