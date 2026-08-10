@@ -37,8 +37,7 @@ function AdminUsersPage() {
           <HolderHeader>Admin Users</HolderHeader>
           {users.length === 0 ||
           (users.length === 1 &&
-            users[0].email === "admin@gmail.com" &&
-            users[0].password === "12345678") ? (
+            users[0].email === "admin@gmail.com") ? (
             <h3 className="text-2xl font-semibold italic text-hover-color text-center mt-10">
               No Users Found...
             </h3>
