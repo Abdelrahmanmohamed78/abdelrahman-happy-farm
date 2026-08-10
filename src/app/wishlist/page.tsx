@@ -9,12 +9,19 @@ import ProductCard from "../components/ProductCard";
 import { ProductProps } from "../types/types";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { handleRemoveProductFromUserWishlist } from "../RTK/farmSlice";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
 
 function WishlistPage() {
   const selectedUser = useSelector(
     (state: RootState) => state.selectedUser,
   );
   const dispatch = useDispatch();
+  useEffect(() => {
+    if(selectedUser == null) {
+      redirect("/");
+    }
+  }, [selectedUser])
   return (
     <div className="pt-27.5 pb-10">
       <PageHeader>Wishlist</PageHeader>

@@ -150,7 +150,7 @@ function WishlistPage() {
                                   });
                                 } else {
                                   dispatch(
-                                    handleSelectedProduct({ ...product }),
+                                    handleSelectedProduct({ ...product, productAmount: 1 }),
                                   );
                                 }
                               } else {

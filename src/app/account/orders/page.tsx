@@ -27,7 +27,7 @@ function OrdersPage() {
             <div className="emptyCart py-10 sm:w-125 mx-auto text-center">
               <BsCartX className="text-7xl md:text-9xl text-border-color mx-auto" />
               <h3 className="text-3xl md:text-4xl font-semibold text-main-color my-5">
-                Your cart is currently empty.
+                Your Completed Orders is currently empty.
               </h3>
               <p className="text-hover-color font-semibold my-5">
                 Before proceed to checkout you must add some products to your

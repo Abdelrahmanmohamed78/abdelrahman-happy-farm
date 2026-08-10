@@ -163,7 +163,7 @@ function ProductCard({
                       }
                     });
                   } else {
-                    dispatch(handleSelectedProduct({ ...product }));
+                    dispatch(handleSelectedProduct({ ...product, productAmount: 1 }));
                   }
                 } else {
                   toast.error("You Should Login First!");
