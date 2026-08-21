@@ -59,7 +59,7 @@ A modern and responsive **organic farm e-commerce website** built with **Next.js
 - Product categories.
 - Individual product details.
 - Product ratings.
-- Product pricing and weight.
+- Product pricing and detailed information.
 - Dynamic product routes.
 - Add, edit, and remove products through the admin dashboard.
 
